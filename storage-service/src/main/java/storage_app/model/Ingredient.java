@@ -1,7 +1,7 @@
-package model;
+package storage_app.model;
 
-import enums.IngredientType;
-import enums.UnitType;
+import storage_app.enums.IngredientType;
+import storage_app.enums.UnitType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

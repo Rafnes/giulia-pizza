@@ -1,4 +1,4 @@
-package enums;
+package storage_app.enums;
 
 public enum IngredientType {
     MEAT,

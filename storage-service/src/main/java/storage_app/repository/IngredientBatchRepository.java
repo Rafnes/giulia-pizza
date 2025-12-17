@@ -1,6 +1,6 @@
-package repository;
+package storage_app.repository;
 
-import model.IngredientBatch;
+import storage_app.model.IngredientBatch;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

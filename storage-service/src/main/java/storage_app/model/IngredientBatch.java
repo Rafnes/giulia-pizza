@@ -1,4 +1,4 @@
-package model;
+package storage_app.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
