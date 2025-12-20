@@ -18,6 +18,7 @@
 
 	<modules>
 		<module>storage-service</module>
+		<module>ui-service</module>
 	</modules>
 
 	<url/>

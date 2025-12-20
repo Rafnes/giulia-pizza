@@ -14,6 +14,12 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
+                  name: shipment_number
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
                   name: supplier
                   type: VARCHAR(255)
                   constraints:

@@ -15,6 +15,9 @@ public class Shipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "shipment_number", unique = true, nullable = false)
+    private String shipmentNumber;
+
     @Column(name = "supplier", nullable = false)
     private String supplier;
 

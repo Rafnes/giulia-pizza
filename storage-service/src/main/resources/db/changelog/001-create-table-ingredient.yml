@@ -1,29 +1,29 @@
 databaseChangeLog:
   - changeSet:
       id: 001
-      author: "vdineka"
+      author: vdineka
       changes:
         - createTable:
-            tableName: "ingredient"
+            tableName: ingredient
             columns:
               - column:
-                  name: "id"
+                  name: id
                   type: BIGINT
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: "name"
+                  name: name
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
-                  name: "type"
+                  name: type
                   type: VARCHAR(30)
                   constraints:
                     nullable: false
               - column:
-                  name: "unit"
+                  name: unit
                   type: VARCHAR(10)
                   constraints:
                     nullable: false
