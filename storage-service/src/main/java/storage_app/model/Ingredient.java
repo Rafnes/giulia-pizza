@@ -25,9 +25,11 @@ public class Ingredient {
     private String name;
 
     @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private IngredientType type;
 
     @Column(name = "unit", nullable = false)
+    @Enumerated(EnumType.STRING)
     private UnitType unit;
 
     @Override

@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/001-create-table-ingredient.yml
+  - include:
+      file: db/changelog/002-create-table-ingredient_batch.yml

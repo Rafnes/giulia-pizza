@@ -18,8 +18,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class IngredientBatch {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredient_id", nullable = false)
@@ -47,18 +47,18 @@ public class IngredientBatch {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         IngredientBatch that = (IngredientBatch) o;
-        return Objects.equals(uuid, that.uuid) && Objects.equals(ingredient, that.ingredient) && Objects.equals(quantity, that.quantity) && Objects.equals(productionDate, that.productionDate) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(supplier, that.supplier) && Objects.equals(batchNumber, that.batchNumber) && Objects.equals(receivedDate, that.receivedDate);
+        return Objects.equals(id, that.id) && Objects.equals(ingredient, that.ingredient) && Objects.equals(quantity, that.quantity) && Objects.equals(productionDate, that.productionDate) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(supplier, that.supplier) && Objects.equals(batchNumber, that.batchNumber) && Objects.equals(receivedDate, that.receivedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, ingredient, quantity, productionDate, expirationDate, supplier, batchNumber, receivedDate);
+        return Objects.hash(id, ingredient, quantity, productionDate, expirationDate, supplier, batchNumber, receivedDate);
     }
 
     @Override
     public String toString() {
         return "IngredientBatch{" +
-                "uuid=" + uuid +
+                "id=" + id +
                 ", ingredient=" + ingredient +
                 ", quantity=" + quantity +
                 ", productionDate=" + productionDate +
