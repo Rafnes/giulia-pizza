@@ -13,8 +13,6 @@ import storage_app.repository.IngredientBatchRepository;
 import storage_app.repository.IngredientRepository;
 import storage_app.repository.ShipmentRepository;
 
-import java.time.LocalDate;
-
 @Service
 public class StorageService {
     private final IngredientRepository ingredientRepository;
@@ -33,10 +31,9 @@ public class StorageService {
 
     @Transactional
     public void receiveShipment(ShipmentRequestDTO requestDTO) {
-        Shipment shipment = new Shipment();
-        shipmentMapper.toShipmentEntity(requestDTO);
+        Shipment shipment = shipmentMapper.toShipmentEntity(requestDTO);
         for (ShipmentItemRequestDTO itemDTO : requestDTO.getItems()) {
-            Ingredient ingredient = ingredientRepository.findByNameAndType(itemDTO.getName(), String.valueOf(itemDTO.getType()))
+            Ingredient ingredient = ingredientRepository.findByNameAndType(itemDTO.getName(), itemDTO.getType())
                     .orElseGet(() -> {
                         Ingredient newIngredient = new Ingredient();
                         newIngredient.setName(itemDTO.getName());
@@ -51,8 +48,10 @@ public class StorageService {
                         newBatch.setIngredient(ingredient);
                         newBatch.setBatchNumber(itemDTO.getBatchNumber());
                         newBatch.setQuantity(0.0);
-                        newBatch.setExpirationDate(LocalDate.now().plusYears(1));
+                        newBatch.setProductionDate(itemDTO.getProductionDate());
+                        newBatch.setExpirationDate(itemDTO.getExpirationDate());
                         newBatch.setReceivedDate(requestDTO.getDeliveryDate());
+                        newBatch.setSupplier(requestDTO.getSupplier());
                         return batchRepository.save(newBatch);
                     });
             ShipmentItem item = shipmentMapper.toItemEntity(itemDTO, shipment, batch);

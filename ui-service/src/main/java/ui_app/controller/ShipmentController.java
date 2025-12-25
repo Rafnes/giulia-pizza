@@ -1,9 +1,8 @@
 package ui_app.controller;
 
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,26 +12,24 @@ import ui_app.client.ShipmentClient;
 @Controller
 @RequestMapping("/shipments")
 public class ShipmentController {
-    private final ShipmentClient shipmentClient;
+    private final ShipmentClient client;
 
-    public ShipmentController(ShipmentClient shipmentClient) {
-        this.shipmentClient = shipmentClient;
+    public ShipmentController(ShipmentClient client) {
+        this.client = client;
+    }
+
+    @GetMapping("/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("shipmentDTO", new ShipmentRequestDTO());
+        return "shipments/create";
     }
 
     @PostMapping
-    public String createShipment(
-            @Valid @ModelAttribute("shipmentDTO") ShipmentRequestDTO requestDTO,
-            BindingResult result,
-            Model model
-    ) {
-        if (result.hasErrors()) {
-            return "shipments/create";
-        }
-
+    public String submitCreateForm(@ModelAttribute ShipmentRequestDTO dto, Model model) {
         try {
-            shipmentClient.receiveShipment(requestDTO);
-            model.addAttribute("success", "Поставка успешно принята");
-            return "redirect:/shipments";
+            client.receiveShipment(dto);
+            model.addAttribute("success", "Поставка успешно принята!");
+            return "shipments/create";
         } catch (Exception e) {
             model.addAttribute("error", "Ошибка: " + e.getMessage());
             return "shipments/create";

@@ -9,6 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface IngredientBatchRepository extends JpaRepository<IngredientBatch, UUID> {
-    public Optional<IngredientBatch> findByIngredientAndBatchNumber(Ingredient ingredient, String batchNumber);
+public interface IngredientBatchRepository extends JpaRepository<IngredientBatch, Integer> {
+    Optional<IngredientBatch> findByIngredientAndBatchNumber(Ingredient ingredient, String batchNumber);
 }
