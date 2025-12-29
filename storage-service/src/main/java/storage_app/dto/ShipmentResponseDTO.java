@@ -6,5 +6,4 @@ import lombok.Data;
 public class ShipmentResponseDTO {
     private Long shipmentId;
     private String shipmentNumber;
-    private String status;
 }

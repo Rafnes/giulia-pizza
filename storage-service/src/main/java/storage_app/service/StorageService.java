@@ -1,9 +1,15 @@
 package storage_app.service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import storage_app.dto.IngredientResponseDTO;
 import storage_app.dto.ShipmentItemRequestDTO;
 import storage_app.dto.ShipmentRequestDTO;
+import storage_app.exception.InvalidPageParameterException;
+import storage_app.mapper.IngredientMapper;
 import storage_app.mapper.ShipmentMapper;
 import storage_app.model.Ingredient;
 import storage_app.model.IngredientBatch;
@@ -13,20 +19,23 @@ import storage_app.repository.IngredientBatchRepository;
 import storage_app.repository.IngredientRepository;
 import storage_app.repository.ShipmentRepository;
 
+
 @Service
 public class StorageService {
     private final IngredientRepository ingredientRepository;
     private final IngredientBatchRepository batchRepository;
     private final ShipmentRepository shipmentRepository;
     private final ShipmentMapper shipmentMapper;
+    private final IngredientMapper ingredientMapper;
 
     public StorageService(IngredientRepository ingredientRepository,
                           IngredientBatchRepository batchRepository, ShipmentRepository shipmentRepository,
-                          ShipmentMapper shipmentMapper) {
+                          ShipmentMapper shipmentMapper, IngredientMapper ingredientMapper) {
         this.ingredientRepository = ingredientRepository;
         this.batchRepository = batchRepository;
         this.shipmentRepository = shipmentRepository;
         this.shipmentMapper = shipmentMapper;
+        this.ingredientMapper = ingredientMapper;
     }
 
     @Transactional
@@ -61,5 +70,13 @@ public class StorageService {
             batchRepository.save(batch);
         }
         shipmentRepository.save(shipment);
+    }
+
+    public Page<IngredientResponseDTO> getAllIngredients(int page, int size) {
+        if (page <= 0 || size <= 0) {
+            throw new InvalidPageParameterException("Номер страницы и количество элементов должны быть больше 0");
+        }
+        Pageable pageable = PageRequest.of(page, size);
+        return ingredientRepository.findAll(pageable).map(ingredientMapper::toIngredientResponse);
     }
 }
